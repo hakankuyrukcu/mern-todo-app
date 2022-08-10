@@ -1,9 +1,9 @@
 import { Routes, Route, Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import CreateTodo from './components/create-todo';
-import EditTodo from './components/edit-todo';
-import TodosList from './components/TodoList';
+import { CreateTodo } from './components/CreateTodo';
+import { EditTodo } from './components/EditTodo';
+import { TodosList } from './components/TodosList';
 
 import logo from './logo.png';
 

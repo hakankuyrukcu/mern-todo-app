@@ -1,19 +1,13 @@
 import { Link } from 'react-router-dom';
 
-export function TodoDetail(props) {
+export function TodoDetail({ todo }) {
   return (
     <tr>
-      <td className={props.todo.todo_completed ? 'completed' : ''}>
-        {props.todo.todo_description}
-      </td>
-      <td className={props.todo.todo_completed ? 'completed' : ''}>
-        {props.todo.todo_responsible}
-      </td>
-      <td className={props.todo.todo_completed ? 'completed' : ''}>
-        {props.todo.todo_priority}
-      </td>
+      <td className={todo.completed ? 'completed' : ''}>{todo.description}</td>
+      <td className={todo.completed ? 'completed' : ''}>{todo.responsible}</td>
+      <td className={todo.completed ? 'completed' : ''}>{todo.priority}</td>
       <td>
-        <Link to={'/edit/' + props.todo._id}>Edit</Link>
+        <Link to={'/edit/' + todo._id}>Edit</Link>
       </td>
     </tr>
   );

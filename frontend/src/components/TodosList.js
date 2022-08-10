@@ -3,17 +3,17 @@ import axios from 'axios';
 
 import { TodoDetail } from './TodoDetail';
 
-export default function TodoList() {
-  const [todo, setTodo] = useState([]);
+export const TodosList = () => {
+  const [todos, setTodos] = useState([]);
 
-  const getTodo = async () => {
+  const getTodoList = async () => {
     const { data } = await axios.get(`http://localhost:4000/todos/`);
-    setTodo(data);
+    setTodos(data);
   };
 
   useEffect(() => {
-    getTodo();
-  }, []);
+    getTodoList();
+  }, [todos]);
 
   return (
     <div>
@@ -28,11 +28,11 @@ export default function TodoList() {
           </tr>
         </thead>
         <tbody>
-          {todo.map(function (t, i) {
+          {todos.map(function (t, i) {
             return <TodoDetail todo={t} key={i} />;
           })}
         </tbody>
       </table>
     </div>
   );
-}
+};
