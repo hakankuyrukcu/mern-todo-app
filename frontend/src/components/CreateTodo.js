@@ -15,7 +15,7 @@ export const CreateTodo = () => {
     e.preventDefault();
 
     axios
-      .post(`http://localhost:4000/todos/add`, todo)
+      .post(`${process.env.REACT_APP_BACKEND_URL}/add`, todo)
       .then((res) => console.log(res.data));
 
     navigate('/');

@@ -1,10 +1,9 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useInput } from '../hooks/useInput';
 
 export const EditTodo = () => {
-  const [todo, setTodo] = useInput({
+  const [todo, setTodo] = useState({
     description: '',
     responsible: '',
     priority: '',
@@ -13,22 +12,29 @@ export const EditTodo = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const fetchTodo = () => {
-    axios
-      .get(`http://localhost:4000/todos/${id}`)
-      .then(({ data }) => setTodo(data))
-      .catch((err) => console.log(err));
+  useEffect(() => {
+    const fetchTodo = () => {
+      axios
+        .get(`${process.env.REACT_APP_BACKEND_URL}/${id}`)
+        .then(({ data }) => setTodo(data))
+        .catch((err) => console.log(err));
+    };
+    fetchTodo();
+  }, [id]);
+
+  const handleChange = (event) => {
+    setTodo({ ...todo, [event.target.name]: event.target.value });
   };
 
-  useEffect(() => {
-    fetchTodo();
-  }, []);
+  const handleChangeCheckbox = (event) => {
+    setTodo({ ...todo, [event.target.name]: event.target.checked });
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
 
     axios
-      .post(`http://localhost:4000/todos/update/${id}`, todo)
+      .post(`${process.env.REACT_APP_BACKEND_URL}/update/${id}`, todo)
       .then((res) => console.log(res.data));
 
     navigate('/');
@@ -45,7 +51,7 @@ export const EditTodo = () => {
             className="form-control"
             name="description"
             value={todo.description}
-            onChange={setTodo}
+            onChange={handleChange}
           />
         </div>
         <div className="form-group">
@@ -55,7 +61,7 @@ export const EditTodo = () => {
             className="form-control"
             name="responsible"
             value={todo.responsible}
-            onChange={setTodo}
+            onChange={handleChange}
           />
         </div>
         <div className="form-group">
@@ -67,7 +73,7 @@ export const EditTodo = () => {
               id="priorityLow"
               value="Low"
               checked={todo.priority === 'Low'}
-              onChange={setTodo}
+              onChange={handleChange}
             />
             <label className="form-check-label">Low</label>
           </div>
@@ -79,7 +85,7 @@ export const EditTodo = () => {
               id="priorityMedium"
               value="Medium"
               checked={todo.priority === 'Medium'}
-              onChange={setTodo}
+              onChange={handleChange}
             />
             <label className="form-check-label">Medium</label>
           </div>
@@ -91,7 +97,7 @@ export const EditTodo = () => {
               id="priorityHigh"
               value="High"
               checked={todo.priority === 'High'}
-              onChange={setTodo}
+              onChange={handleChange}
             />
             <label className="form-check-label">High</label>
           </div>
@@ -102,7 +108,7 @@ export const EditTodo = () => {
             id="completedCheckbox"
             type="checkbox"
             name="completed"
-            onChange={setTodo}
+            onChange={handleChangeCheckbox}
             checked={todo.completed}
             value={todo.completed}
           />

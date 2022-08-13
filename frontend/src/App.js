@@ -14,14 +14,14 @@ function App() {
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
           <a
             className="navbar-brand"
-            href="https://hakemsoft.com"
+            href={process.env.REACT_APP_BRAND_URL}
             target="_blank"
             rel="noreferrer"
           >
             <img src={logo} width="30" height="30" alt="HakemSoft.com" />
           </a>
           <Link to="/" className="navbar-brand">
-            MERN-Stack Todo App
+            {process.env.REACT_APP_NAME}
           </Link>
           <div className="collpase navbar-collapse">
             <ul className="navbar-nav mr-auto">

@@ -7,7 +7,5 @@ export const useInput = (params) => {
     setTodo({ ...todo, [event.target.name]: event.target.value });
   };
 
-  console.log(todo);
-
   return [todo, changeTodo];
 };

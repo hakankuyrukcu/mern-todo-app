@@ -7,13 +7,19 @@ export const TodosList = () => {
   const [todos, setTodos] = useState([]);
 
   const getTodoList = async () => {
-    const { data } = await axios.get(`http://localhost:4000/todos/`);
+    const { data } = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/`);
     setTodos(data);
   };
 
   useEffect(() => {
     getTodoList();
-  }, [todos]);
+  }, []);
+
+  const deleteTodo = (_id) => {
+    axios
+      .post(`${process.env.REACT_APP_BACKEND_URL}/delete/${_id}`)
+      .then((res) => getTodoList());
+  };
 
   return (
     <div>
@@ -29,7 +35,7 @@ export const TodosList = () => {
         </thead>
         <tbody>
           {todos.map(function (t, i) {
-            return <TodoDetail todo={t} key={i} />;
+            return <TodoDetail todo={t} key={i} deleteAction={deleteTodo} />;
           })}
         </tbody>
       </table>
